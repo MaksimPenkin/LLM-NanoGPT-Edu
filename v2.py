@@ -94,6 +94,20 @@ class MultiHeadAttention(nn.Module):
         out = self.proj(out)
         return out
 
+class FeedForward(nn.Module):
+    """ a simple linear layer followed by a non-linearity"""
+
+    def __init__(self, n_embd):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(n_embd, n_embd * 4),
+            nn.ReLU(),
+            nn.Linear(n_embd * 4, n_embd)
+        )
+
+    def forward(self, x):
+        return self.net(x)
+
 # super simple bigram model
 class BigramLanguageModel(nn.Module):
 
